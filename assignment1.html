@@ -4,7 +4,7 @@
         <meta charset="utf-8"> 
         <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
 
-        <title>Example Student's HCDE 439 Physical Computing Page!</title> 
+        <title>Colleen Carroll's HCDE 439 Physical Computing Page</title> 
 
         <link href="style.css" media="screen" rel="stylesheet" type="text/css" />
 
@@ -12,13 +12,71 @@
     <body> 
 
         <div class="header">
-            <h1>Example Student's Assignment 1!</h1>
+            <h1>Colleen Carroll's Assignment 1!</h1>
+            <h2>Schematic</h2>
             <p>
             <img src="red-panda.jpg" width=400></a>
             </p>
-            <p>
-            Here is all the documentation for assignment 1!
-            </p>
+
+            <h2>Circuit</h2>
+
+            <h2>Firmware</h2>
+            <div class="code-box">
+                <code>
+    /*
+    A1 Colleen Carroll - Blinking LEDs
+     */
+
+    // define the GPIO pins connected to each of the three colored LEDs
+    const int GREEN_PIN = 2;
+    const int YELLOW_PIN = 7;
+    const int BLUE_PIN = 12;
+
+    // define the delay in between each blink. 
+    const int DELAY = 500;
+
+    // the setup function runs once when you press reset or power the board
+    void setup() {
+      // initialize the three pins connected to LEDs as output.
+      pinMode(GREEN_PIN, OUTPUT);
+      pinMode(YELLOW_PIN, OUTPUT);
+      pinMode(BLUE_PIN, OUTPUT);
+    }
+
+    // alternate turning each of three colored LEDs on and off in the loop function
+    void loop() {
+      // turn the green LED on (HIGH is the voltage level)
+      digitalWrite(GREEN_PIN, HIGH);
+      // leave the green LED on for DELAY ms
+      delay(DELAY);
+      // turn the green LED off by making the voltage LOW
+      digitalWrite(GREEN_PIN, LOW);
+      
+      // leave no delay in between turning one light off and the next on
+      
+      // turn the yellow LED on (HIGH is the voltage level)
+      digitalWrite(YELLOW_PIN, HIGH);
+      // leave the yellow LED on for DELAY ms
+      delay(DELAY);
+      // turn the yellow LED off by making the voltage LOW
+      digitalWrite(YELLOW_PIN, LOW);
+      
+      // leave no delay in between turning one light off and the next on
+      
+      // turn the blue LED on (HIGH is the voltage level)
+      digitalWrite(BLUE_PIN, HIGH);
+      // leave the blue LED on for DELAY ms
+      delay(DELAY);
+      // turn the blue LED off by making the voltage LOW
+      digitalWrite(BLUE_PIN, LOW);
+
+      // leave no delay in between turning one light off and the next on
+    }
+                </code>
+            </div>
+            
+            <h2>Operation</h2>
+            <img src="hcde439_A1.gif" width=400></a>
         </div>
         
     </body>
