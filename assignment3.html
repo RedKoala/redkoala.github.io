@@ -1,0 +1,126 @@
+<!DOCTYPE html> 
+<html> 
+    <head> 
+        <meta charset="utf-8"> 
+        <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
+
+        <title>Colleen Carroll's HCDE 439 Physical Computing Page</title> 
+
+        <link href="style.css" media="screen" rel="stylesheet" type="text/css" />
+
+    </head> 
+    <body> 
+
+        <div class="header">
+            <h1>Colleen Carroll's Assignment 3!</h1>
+            <p>
+              For assignment 3, I used a thermistor to detect the relative temperature and adjust the 
+              brightness of three colored LEDs accordingly. The yellow LED lights at room temperature, 
+              red LED above room temp, and the blue one lights above room temp. The LED brightness 
+              corresponds to how hot, warm, or cold it is.
+            </p>
+
+            <h2>Operation</h2>
+            <img src="hcde439_a3_operation.gif" width=650></img>
+
+<!--             <h2>Schematic</h2>
+            <p>
+            <img src="hcde439_a3_schematic.jpg" width=400></a>
+            </p>
+
+            <h2>Circuit</h2>
+            <img src="hcde439_a3_circuit.jpg" width=400></a>
+ -->
+            <h2>Firmware</h2>
+            <div class="code-box">
+                <code>
+    /*
+      A3 Colleen Carroll - thermistor_LEDs
+      
+      uses a thermistor to detect the relative temperature and adjust the brightness of 
+      three colored LEDs accordingly. Room temperature lights the yellow LED, above 
+      room temp lights the red LED, and colder lights the blue one. The LED brightness 
+      corresponds to how hot, warm, or cold it is.
+    */
+
+    // these are the 3 temperature ranges used to control the 3 LEDs. I found them by 
+    // trial and error given the room temp of the CoMotion Makerspace, how warm my 
+    // breath was, and how cold my water bottle was.
+    const int MAX_COLD = 1005;
+    const int MIN_COLD = 995;
+    const int MAX_WARM = 995;
+    const int MIN_WARM = 985;
+    const int MAX_HOT = 985;
+    const int MIN_HOT = 975;
+
+    // the pins that the 3 LEDs get data from. The pins represent the 3 temperature 
+    //ranges cold, warm, and hot which are the colors blue, yellow, and red respectively
+    const int PIN_COLD = 9;
+    const int PIN_WARM = 10;
+    const int PIN_HOT = 11;
+
+    int brightness = 0;
+
+    // the setup routine runs once when you press reset:
+    void setup() {
+      // initialize serial communication at 9600 bits per second:
+      Serial.begin(9600);
+    }
+
+    // the loop routine runs over and over again forever:
+    void loop() {
+      // read the input on analog pin 0:
+      int sensorValue = analogRead(A0);
+      Serial.print(sensorValue);
+
+      // condition behavior on which of the 3 temp ranges 
+      // the sensorValue is in
+      if (sensorValue > MIN_COLD && sensorValue <= MAX_COLD)
+      {
+        Serial.println(" COLD");
+
+        brightness = map(sensorValue, MIN_COLD, MAX_COLD, 10, 255);
+        brightness = constrain(brightness, 10, 255);
+        
+        // set PIN_COLD to brightness
+        analogWrite(PIN_COLD, brightness);
+        // set other pins to 0
+        analogWrite(PIN_WARM, 0);
+        analogWrite(PIN_HOT, 0);
+      }
+      else if (sensorValue > MIN_WARM && sensorValue <= MAX_WARM)
+      {
+        Serial.println(" WARM");
+
+        brightness = map(sensorValue, MIN_WARM, MAX_WARM, 10, 255);
+        brightness = constrain(brightness, 10, 255);
+        
+        // set PIN_WARM to brightness
+        analogWrite(PIN_WARM, brightness);
+        // set other pins to 0
+        analogWrite(PIN_COLD, 0);
+        analogWrite(PIN_HOT, 0);
+      }
+      else if (sensorValue > MIN_HOT && sensorValue <= MAX_HOT)
+      {
+        Serial.println(" HOT");
+
+        brightness = map(sensorValue, MIN_HOT, MAX_HOT, 10, 255);
+        brightness = constrain(brightness, 10, 255);
+
+        // set PIN_HOT to brightness
+        analogWrite(PIN_HOT, brightness);
+        // set other pins to 0
+        analogWrite(PIN_COLD, 0);
+        analogWrite(PIN_WARM, 0);
+      }
+
+      delay(1);        // delay in between reads for stability
+    }
+                </code>
+            </div>
+            
+        </div>
+        
+    </body>
+</html>
