@@ -25,6 +25,10 @@ code {
   white-space: pre;
 }
 
+li {
+  padding-bottom: 10px;
+}
+
 .code-box {
   background-color:#eee; 
   width: 60%;

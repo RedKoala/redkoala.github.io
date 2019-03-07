@@ -14,6 +14,277 @@
         <div class="header">
             <h1>Colleen Carroll's HCDE 439 Final Project</h1>
 
+            <h2> Prototype Shield </h2>
+            <p>
+                3-7-19
+            </p>
+            <p>
+                I soldered my circuit using a prototype shield for a more stable electrical and mechanical connection. It now runs off of a 9V battery.
+            </p>
+            <p>
+                I changed the behavior slightly in this iteration. Instead of a slowly blinking light to indicate that a user has taken a sip, I changed it to 3 fast blinking lights. I noticed that the slowly blinking light was hard to distinguish from the solid light which indicates that a user still needs to take a sip. The rapid blinks provide a clearer contrast and hopefully a clearer signal to the user. For testing purposes, I also changed to a ten second timer between sips.
+            </p>
+            <img src="final_project_protoshield.gif" width=400/>
+            
+            <h3>
+                Prototype Shield Schematic
+            </h3> 
+            <p>
+                I adjusted from a 330 ohm resistor for the LED to 2k ohm. This still provides plenty of light, but limits current further, saving battery.
+            </p>
+            <img src="final_project_protoshield_schematic.jpg" width=550/>
+
+            <h3>
+                Prototype Shield Circuit
+            </h3> 
+             <img src="final_project_protoshield_circuit_1.jpg" width=550/>
+             <img src="final_project_protoshield_circuit_2.jpg" width=550/>
+            <h3>
+                Prototype Shield Debugging
+            </h3> 
+            <p>
+                When I first soldered everything together, it was not functioning as I expected. I wasn't seeing a light after the timeout or when the whole baord was tilted. I took the following steps to debug:
+            </p>
+            <p>
+              <ol>
+                <li>
+                  <strong>Double checked GPIO pins</strong> matched the pins referenced in code. They did.
+                </li>
+                <li>
+                  <strong>Read from Serial</strong> to see if the tilt was being detected. It was, so I figured that part of the circuit was working ok.
+                </li>
+                <li>
+                  <strong>Check all connections</strong> with a multimeter to see if there was something that wasn't soldered correctly. All expected connections were in tact. It should be noted that the LED lit up when using the short circuit checker on the multimeter, as expected.
+                </li>
+                <li>
+                  <strong>Simplify LED logic. </strong> I uploaded a simpler program that jsut lit up the LED to confirm that the problem was with that part of the circuit. The LED did <strong>NOT</strong> light up. So there was definitely something up with this part of the circuit.
+                </li>
+                <li>
+                  <strong>Try a different output pin. </strong> I changed the GPIO pin that wrote to the LED in both my circuit and the code. The LED still did <strong>NOT</strong> light up. So it wasn't a problem with the pin
+                </li>
+                <li>
+                  <strong>Try new components. </strong> I built a simple circuit on a separate breadboard with a different LED and resistor and plugged them into the same GPIO pin that is referenced in my code. This would help me narrow down if the LED was perhaps busted. The LED on the breadboard <strong>DID</strong> light up. But it didn't make sense that the LED on my protoshield was bad because when I had used the multimeter earlier, it had lit up.
+                </li>
+                <li>
+                  <strong>Check the connections again </strong> with a multimeter. This time I realized that the LED did light up but only if I connected the ground pin of the multimeter to the power side of the LED and vice versa. 
+                </li>
+              </ol>
+            </p>
+            <p>
+                <strong>The LED was in backwards. Derp.</strong>
+            </p>
+            <p>
+              To fix it, I desoldered the LED from the protoshield and resoldered it in correctly. I actually used a new LED because it was pretty difficult to get the old one out and I basically destroyed it in the process. Then I tested it all again, and it worked!
+            </p>
+            <p>
+              Lesson learned: the polarity of the multimeter can give you a clue how your circuit is wired when working with diodes.
+            </p>
+
+            <h3> Prototype Shield Code </h3>
+            <div class="code-box">
+                <code>
+    /* Final project - Colleen Carroll
+    *  Hydration Helper
+    *  If the bottle is not titled (i.e. the user has not had a sip) within 
+    *  30mins, turn the LED on. If it is tilted, give a slow blink as feedback 
+    *  and restart the timer.
+    */
+
+    const int tiltPin = 2; // the digital input pin reading from the tilt sensor
+    const int ledPin = 9; // the PWM pin writing to the LED
+
+    unsigned long lastMillis; // the last time the timer was started, in milliseconds
+    // this will be populated with millis() which returns the time in ms as an unsigned long
+
+    /* Returns true (1) if it has been more than 30 minutes since the last sip,
+     else returns false (0). */
+    int timeUp() {
+      // maximum time user can go between sips is 
+      // 30 mins = 30 mins * 60 sec * 1000 milliseconds = 1800000
+      // this needs to be an unsigned long to correctly compare with the time 
+      // variables
+      unsigned long maxTime = 8000;
+      
+      if (millis() - lastMillis > maxTime) { // check time since last sip
+        return 1; // return true if over the max time since last sip
+      }
+      
+      else return 0;  // return false if under the max time since last sip
+    }
+
+    void quickBlinks() {
+      int blinkSpeed = 150; // the speed of the blinks
+      int blinkDelay = 1000;  // a delay before triggering the blink feedback again
+      
+      analogWrite(ledPin, 255);
+      delay(blinkSpeed);
+      analogWrite(ledPin, 0);
+      delay(blinkSpeed);
+      analogWrite(ledPin, 255);
+      delay(blinkSpeed);
+      analogWrite(ledPin, 0);
+      delay(blinkSpeed);
+      analogWrite(ledPin, 255);
+      delay(blinkSpeed);
+      
+      analogWrite(ledPin, 0);
+      delay(blinkDelay);
+    }
+
+    void setup() {
+      Serial.begin(9600); // start Serial for debugging
+      pinMode(tiltPin, INPUT);
+      analogWrite(ledPin, 0);
+      lastMillis = millis(); // record when the "timer" is started
+    }
+
+    void loop() {
+      int tilted = digitalRead(tiltPin);
+    //  Serial.print(lastMillis);
+      Serial.print(tilted);
+      Serial.print(" | ");
+      Serial.println(millis() - lastMillis);
+
+      if (tilted) { // if bottle is tilted (i.e. user is taking a sip)
+        lastMillis = millis();  // reset the time of last sip to now
+
+        // 3 quick blinks as feedback that sensed the sip
+        quickBlinks();
+      } 
+      else {
+        if(timeUp() == 1) { // check if time is up since the last sip
+          // steady LED signal to user that they should take a sip
+          Serial.println("Time's Up!");
+          analogWrite(ledPin, 255);  
+        }
+        // if time is not up, maintain current state (LED off)
+        else {
+          analogWrite(ledPin, 0);
+        }
+      }
+    }
+                </code>
+            </div>
+
+
+
+            <h2> Breadboard Prototype </h2>
+            <p>
+                2-22-19
+            </p>
+            <p>
+                I built an operational protoype of the Hydration Helper using a breadboard and ardunio. The tilt sensor is strapped to a water bottle and connected to the rest of the circuit via alligator clips. 
+            </p>
+            <p>
+                When a user has waited more than the maximum time between sips, the LED turns on. When a user takes a sip, the LED blinks slowly once and then turns off to indicate that it sensed the sip and the timer has been restarted. To demonstrate the working system, the maximum time between sips is set to 5 second in the gif below, rather than the intended 30 mins for the final system.
+            </p>
+            <img src="final_project_breadboard_prototype.gif" width=450/>
+            <h3>
+                Breadboard prototype circuit
+            </h3> 
+             <img src="final_project_breadboard_circuit_2.jpg" width=450/>
+             <img src="final_project_breadboard_circuit_1.jpg" width=550/>
+             <img src="final_project_breadboard_circuit_3.jpg" width=450/>
+            <p>
+            <h3>
+                Breadboard prototype schematic
+            </h3> 
+            <p>
+                I decided to switch to a pull-down resistor connected to the tilt sensor. This way, when the sensor is not activated, that part of the circuit will not draw any current. The sensor is expected to spend most of its time not activated, so this should save battery.
+            </p>
+            <img src="final_project_schematic_3.jpg" width=500/>
+            <h3> Breadboard prototype code </h3>
+            <div class="code-box">
+                <code>
+    /* Final project - Colleen Carroll
+    *  Hydration Helper
+    *  If the bottle is not titled (i.e. the user has not had a sip) within 
+    *  30mins, turn the LED on. If it is tilted, give a slow blink as feedback 
+    *  and restart the timer.
+    */
+
+    const int tiltPin = 2; // the digital input pin reading from the tilt sensor
+    const int ledPin = 9; // the PWM pin writing to the LED
+    unsigned long lastMillis; // the last time the timer was started, in milliseconds
+    // this will be populated with millis() which returns the time in ms as an unsigned long
+
+    /* Returns true (1) if it has been more than 30 minutes since the last sip,
+     else returns false (0). */
+    int timeUp() {
+      // maximum time user can go between sips is 
+      // 30 mins = 30 mins * 60 sec * 1000 milliseconds = 1800000
+      // this needs to be an unsigned long to correctly compare with the time 
+      // variables
+      unsigned long maxTime = 5000;
+      
+      if (millis() - lastMillis > maxTime) { // check time since last sip
+        return 1; // return true if over the max time since last sip
+      }
+      
+      else return 0;  // return false if under the max time since last sip
+    }
+
+    /* Turns the LED on and then off slowly */
+    void slowBlink() {
+      int fadeAmount = 5;
+
+      // turn led off before fading back on so blink is more noticeable
+      analogWrite(ledPin, 0);
+      delay(200);
+
+      // fade the brightness up
+      for (int i = 0; i <= 255; i += fadeAmount) {
+        // set the brightness of led
+        analogWrite(ledPin, i);
+
+        // wait for 20 milliseconds to see the dimming effect
+        delay(20);
+      }
+
+      // fade brightness back down
+      for (int j = 255; j >= 0; j -= fadeAmount) {
+        // set the brightness of led
+        analogWrite(ledPin, j);
+
+        // wait for 20 milliseconds to see the dimming effect
+        delay(20);
+      }
+    }
+
+    void setup() {
+      Serial.begin(9600); // start Serial for debugging
+      pinMode(tiltPin, INPUT);
+      analogWrite(ledPin, 0);
+      lastMillis = millis(); // record when the "timer" is started
+    }
+
+    void loop() {
+      int tilted = digitalRead(tiltPin);
+      Serial.print(lastMillis);
+      Serial.print(tilted);
+      Serial.print(" | ");
+      Serial.println(millis() - lastMillis);
+
+      if (tilted) { // if bottle is tilted (i.e. user is taking a sip)
+        lastMillis = millis();  // reset the time of last sip to now
+
+        // slow blink as feedback that sensed the sip
+        slowBlink();
+      } 
+      else {
+        if(timeUp() == 1) { // check if time is up since the last sip
+          // steady LED signal to user that they should take a sip
+          Serial.println("Time's Up!");
+          analogWrite(ledPin, 255);  
+        }
+        // if time is not up, maintain current state (LED off)
+        else {
+          analogWrite(ledPin, 0);
+        }
+      }
+    }
+                </code>
+            </div>
 
             <h2> Breadboard Prototype </h2>
             <p>
