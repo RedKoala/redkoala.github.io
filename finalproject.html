@@ -14,7 +14,62 @@
         <div class="header">
             <h1>Colleen Carroll's HCDE 439 Final Project</h1>
 
-            <h2> Enclosure </h2>
+            <p> I've built what I call the <strong>Hydration Helper</strong>. It reminds you to stay hydrated throughout the day! </p>
+            <p>You strap the Hydration Helper onto your water bottle. If you haven't taken a sip in the last 30 minutes, it will light up blue and stay on until you take a sip. When you take a sip, there is a tilt sensor that can tell you've tilted the water bottle (presumably to take a drink - no cheating!). The Hydration Helper will then blink to indicate that it sensed the tilt, and reset the 30 minute timer. </p>
+            <img src="final_project_v2_tilting.gif" width="500"/>
+            <p>Above, the Hydration Helper blinks when it senses that the bottle has been tilted.</p>
+            <p>The blog below chronicles how I built the Hydration Helper from a sketch through several iterations. </p>
+
+            <h2> Enclosure v2</h2>
+            <p>
+                3-12-19
+            </p> 
+            <p>
+                Enclosure v2 is the first complete prototype of the Hydration Helper and is ready for everyday use! 
+            </p>
+            <img src="final_project_enclosure_v2.gif" width="500"/>
+            <h3>
+                Adjusted Dimensions
+            </h3> 
+            <p>
+              The first iteration of the enclosure (on the left in black) was a bit longer than it needed to be, but not quite tall enough to fit the battery on top of the arduino and protoshield. I took more exact measurements with calipers and adjested these in v2 (on the right in white). 
+            </p>
+            <img src="final_project_v1_vs_v2.jpg" width="550"/>
+            <p>
+            In the second iteration, I also adjusted the enclosure pin sizes. In v1, one was too loose and would just slide apart rather than keeping the two halves together and the other was a bit too tight, and broke when I tried to pull it apart after the first try. </p>
+            <img src="final_project_broken_pin.jpg" width="550"/>
+            <p> Here's the full enlcosure v2 print. </p>
+            <img src="final_project_enclosure_v2_topview.jpg" width="550"/>
+            <h3>
+                STL files
+            </h3> 
+            <p>
+              <ul>
+                <li><a href="final_project_enclosure_top_v2.stl">final_project_top_v2.stl</a></li>
+                <li><a href="final_project_enclosure_bottom_v2.stl">final_project_bottom_v2.stl</a></li>
+              </ul>
+            </p>
+            <h3>
+                Bungee Wraps
+            </h3> 
+            <p>
+              The enclosure also needed an adjustable way to wrap it around the water bottle and keep it in place. I had some bungee cord and spring stop toggles from another project lying around. I drilled 4 holes into the enclosure and threaded the bungee cord through and then closed them together with the toggles.
+            </p>
+            <img src="final_project_bungee_1.jpg" width="400"/>
+            <img src="final_project_bungee_2.jpg" width="400"/>
+            <h3>
+                LED Diffuser
+            </h3> 
+            <p>
+              The light from the LED can be a bit harsh without anything to diffuse it. The big gaping hole also makes the enclosure particularly susceptible to drops of water. I taped a piece of wax paper to the inside of the hole to make the blinking light a bit more pleasant.
+            </p>
+            <img src="final_project_diffuser_back.jpg" width="350"/>
+            <img src="final_project_diffuser.gif" width="285"/>
+
+            
+
+
+            <h2> Enclosure v1</h2>
             <p>
                 3-11-19
             </p> 
@@ -33,8 +88,8 @@
             </h3> 
             <p>
               <ul>
-                <li><a href="final_project_top.stl">final_project_top.stl</a></li>
-                <li><a href="final_project_bottom.stl">final_project_bottom.stl</a></li>
+                <li><a href="final_project_enclosure_top.stl">final_project_top.stl</a></li>
+                <li><a href="final_project_enclosure_bottom.stl">final_project_bottom.stl</a></li>
               </ul>
             </p>
             <h3>
@@ -125,8 +180,9 @@
     const int tiltPin = 2; // the digital input pin reading from the tilt sensor
     const int ledPin = 9; // the PWM pin writing to the LED
 
-    unsigned long lastMillis; // the last time the timer was started, in milliseconds
-    // this will be populated with millis() which returns the time in ms as an unsigned long
+    unsigned long lastMillis; // the last time the timer was started, in ms
+    // this will be populated with millis() which returns the time 
+    // in ms as an unsigned long
 
     /* Returns true (1) if it has been more than 30 minutes since the last sip,
      else returns false (0). */
@@ -146,7 +202,7 @@
 
     void quickBlinks() {
       int blinkSpeed = 150; // the speed of the blinks
-      int blinkDelay = 1000;  // a delay before triggering the blink feedback again
+      int blinkDelay = 1000;  // a delay before re-triggering the blink feedback
       
       analogWrite(ledPin, 255);
       delay(blinkSpeed);
@@ -237,8 +293,9 @@
 
     const int tiltPin = 2; // the digital input pin reading from the tilt sensor
     const int ledPin = 9; // the PWM pin writing to the LED
-    unsigned long lastMillis; // the last time the timer was started, in milliseconds
-    // this will be populated with millis() which returns the time in ms as an unsigned long
+    unsigned long lastMillis; // the last time the timer was started, in ms
+    // this will be populated with millis() which returns the time in 
+    // ms as an unsigned long
 
     /* Returns true (1) if it has been more than 30 minutes since the last sip,
      else returns false (0). */
@@ -318,123 +375,6 @@
                 </code>
             </div>
 
-            <h2> Breadboard Prototype </h2>
-            <p>
-                2-22-19
-            </p>
-            <p>
-                I built an operational protoype of the Hydration Helper using a breadboard and ardunio. The tilt sensor is strapped to a water bottle and connected to the rest of the circuit via alligator clips. 
-            </p>
-            <p>
-                When a user has waited more than the maximum time between sips, the LED turns on. When a user takes a sip, the LED blinks slowly once and then turns off to indicate that it sensed the sip and the timer has been restarted. To demonstrate the working system, the maximum time between sips is set to 5 second in the gif below, rather than the intended 30 mins for the final system.
-            </p>
-            <img src="final_project_breadboard_prototype.gif" width=450/>
-            <h3>
-                Breadboard prototype circuit
-            </h3> 
-             <img src="final_project_breadboard_circuit_2.jpg" width=450/>
-             <img src="final_project_breadboard_circuit_1.jpg" width=550/>
-             <img src="final_project_breadboard_circuit_3.jpg" width=450/>
-            <p>
-            <h3>
-                Breadboard prototype schematic
-            </h3> 
-            <p>
-                I decided to switch to a pull-down resistor connected to the tilt sensor. This way, when the sensor is not activated, that part of the circuit will not draw any current. The sensor is expected to spend most of its time not activated, so this should save battery.
-            </p>
-            <img src="final_project_schematic_3.jpg" width=500/>
-            <h3> Breadboard prototype code </h3>
-            <div class="code-box">
-                <code>
-    /* Final project - Colleen Carroll
-    *  Hydration Helper
-    *  If the bottle is not titled (i.e. the user has not had a sip) within 
-    *  30mins, turn the LED on. If it is tilted, give a slow blink as feedback 
-    *  and restart the timer.
-    */
-
-    const int tiltPin = 2; // the digital input pin reading from the tilt sensor
-    const int ledPin = 9; // the PWM pin writing to the LED
-    unsigned long lastMillis; // the last time the timer was started, in milliseconds
-    // this will be populated with millis() which returns the time in ms as an unsigned long
-
-    /* Returns true (1) if it has been more than 30 minutes since the last sip,
-     else returns false (0). */
-    int timeUp() {
-      // maximum time user can go between sips is 
-      // 30 mins = 30 mins * 60 sec * 1000 milliseconds = 1800000
-      // this needs to be an unsigned long to correctly compare with the time 
-      // variables
-      unsigned long maxTime = 5000;
-      
-      if (millis() - lastMillis > maxTime) { // check time since last sip
-        return 1; // return true if over the max time since last sip
-      }
-      
-      else return 0;  // return false if under the max time since last sip
-    }
-
-    /* Turns the LED on and then off slowly */
-    void slowBlink() {
-      int fadeAmount = 5;
-
-      // turn led off before fading back on so blink is more noticeable
-      analogWrite(ledPin, 0);
-      delay(200);
-
-      // fade the brightness up
-      for (int i = 0; i <= 255; i += fadeAmount) {
-        // set the brightness of led
-        analogWrite(ledPin, i);
-
-        // wait for 20 milliseconds to see the dimming effect
-        delay(20);
-      }
-
-      // fade brightness back down
-      for (int j = 255; j >= 0; j -= fadeAmount) {
-        // set the brightness of led
-        analogWrite(ledPin, j);
-
-        // wait for 20 milliseconds to see the dimming effect
-        delay(20);
-      }
-    }
-
-    void setup() {
-      Serial.begin(9600); // start Serial for debugging
-      pinMode(tiltPin, INPUT);
-      analogWrite(ledPin, 0);
-      lastMillis = millis(); // record when the "timer" is started
-    }
-
-    void loop() {
-      int tilted = digitalRead(tiltPin);
-      Serial.print(lastMillis);
-      Serial.print(tilted);
-      Serial.print(" | ");
-      Serial.println(millis() - lastMillis);
-
-      if (tilted) { // if bottle is tilted (i.e. user is taking a sip)
-        lastMillis = millis();  // reset the time of last sip to now
-
-        // slow blink as feedback that sensed the sip
-        slowBlink();
-      } 
-      else {
-        if(timeUp() == 1) { // check if time is up since the last sip
-          // steady LED signal to user that they should take a sip
-          Serial.println("Time's Up!");
-          analogWrite(ledPin, 255);  
-        }
-        // if time is not up, maintain current state (LED off)
-        else {
-          analogWrite(ledPin, 0);
-        }
-      }
-    }
-                </code>
-            </div>
 
             <h2> Tilt Sensor Test </h2>
             <p>
