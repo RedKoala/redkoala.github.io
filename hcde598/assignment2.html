@@ -1,0 +1,106 @@
+<!DOCTYPE html> 
+<html> 
+    <head> 
+        <meta charset="utf-8"> 
+        <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
+
+        <title>Colleen's HCDE 598 Digital Fabrication Page!</title> 
+
+        <link href="style.css" media="screen" rel="stylesheet" type="text/css" />
+
+    </head> 
+    <body> 
+
+        <div class="header">
+            <h1>Colleen's Assignment 2!</h1>
+            <p>
+                I made the same kit as in <a href="assignment1.html"> Assignment 1</a>, only I used Rhino and Grasshopper to parameterize the kit shapes' dimensions. This helped make adjusting to new widths of cardboard and experimenting with different tolerances easier.
+            </p>
+            <img src="a2.jpg" width=800/>
+
+            <h2>Grasshopper File Structure</h2>
+            <p>
+                I re-used several variables (e.g. Tab Width) through out my file. This quickly led to 'rat-nesting'. Rather than try to disentagle the lines, only to have to redo them all when I update it later, I made use of the grouping and labeling features in Grasshopper. Below you can see the groups are colored according to which Kit Shape they belong to - green for rectangle and pink for circle.
+            </p>
+            <img src="a2_grasshopper.png" width=800/>
+            <p>
+                I grouped the components, first into single actions. For example, the Create Tab group includes a Rectangle component and two Number Sliders for its height and width, while the Place Tab group has a Vector and Move component to put the tab into place. Then I made a higher level grouping for all the actions that apply to open distinct shape. So the Create Tab and Place Tab groups are grouped together into the TAB group. This is useful because I know that the final TAB geometry comes out of the right-most geometry output of the TAB group. 
+            </p>
+            <p>
+                Notice in the screenshot below that instead of clearing up the lines, I just labeled each input and output with consistent variable names, so it's clear to see how they connect.
+            </p>
+            <img src="a2_tab_group.png" width=800/>
+
+            <h2>Baking Geometries</h2>
+            <p>
+                I also pulled out the final geometries to bake into their own group at the end of the file so that they are easy to find. You don't want to bake anything before it or you may end up with intermittent shapes in weird places.
+            </p>
+            <p>
+                Each geometry becomes its own layer, this makes color mapping or show/hiding for different powers easier when it is in Adobe Illustrator. The scores are technically part of Kit Shape 1 but it's easiest to bake them into a separate layer now because they will need to be later for color mapping, anyway.
+            </p>
+            <img src="a2_bake_these.png" width=800/>
+
+            <h2>Parameterizing the Construction Kit</h2>
+            <p>
+                I parameterized Cardboard Width in my grasshopper file. It's set up as a Number Slider so it's easy to adjust. When you change this one parameter, the slot sizes for the tabs on the rectangle and the slot sizes on the circles are both updated. 
+            </p>
+            <img src="a2_cardboard_width.png" width=800/>
+            <p>
+                Cardboard width is all that really needs to be updated to use the file on different width material, but I also paramterized the following to make for easy experimentation:
+                <ul>
+                    <li>
+                        Rectangle Height
+                    </li>
+                    <li>
+                        Rectangle Width
+                    </li>
+                    <li>
+                        Circle Diameter
+                    </li>
+                    <li>
+                        Tab Height
+                    </li>
+                    <li>
+                        Tab Width
+                    </li>
+                    <li>
+                        Distance Between Scores
+                    </li>
+                    <li>
+                        Rectangle Slot Tolerance (How much smaller/larger than the tab width it should be)
+                    </li>
+                    <li>
+                        Circle Slot Tolerance
+                    </li>
+                    <li>
+                        Number of Circle Slots
+                    </li>
+                </ul>
+            </p>
+
+            <h2>New Materials</h2>
+            <p>
+                I still used cardboard for both of the materials in this assignment, so that I could use the same scoring technique. One was 2.83mm and the other was 3.89mm. Not a huge difference, but enough so that the tab size of one didn't work for the other.
+            </p>
+            <img src="a2_material_a.jpg" width=400/><img src="a2_material_b.jpg" width=400/>
+            
+            <h2>Final Step</h2>
+            <p>
+                Found cardboard comes in lots of different shapes, so the Grasshopper file only produces one of each Kit Shape. This way the Kit Shapes can be arranged as needed in Illustrator. Then all you need to do is print!
+            </p>
+            <img src="a2_lasercut.gif" width=600/>
+
+            <h2>Files</h2>
+            <p>
+                <a href="a2_cecarrol.3dm">Rhino File</a>
+            </p>
+            <p>
+                <a href="a2_cecarrol.gh">Grasshopper File</a>
+            </p>
+            <p>
+                <a href="a2_cecarrol.dxf">DXF File</a>
+            </p>
+        </div>
+        
+    </body>
+</html>
