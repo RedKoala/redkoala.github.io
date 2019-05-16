@@ -1,0 +1,88 @@
+<!DOCTYPE html> 
+<html> 
+    <head> 
+        <meta charset="utf-8"> 
+        <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
+
+        <title>Colleen's HCDE 598 Digital Fabrication Page!</title> 
+
+        <link href="style.css" media="screen" rel="stylesheet" type="text/css" />
+
+    </head> 
+    <body> 
+
+        <div class="header">
+            <h1>Colleen's Assignment 5!</h1>
+            <p>
+                I made a teensy tinesy copper cube with finger Joints!
+            </p>
+            <img src="a5.gif" width=500/>
+
+            <h2> Attempt 1</h2>
+            <h3> Dogbones </h3>
+            <p> 
+                With sharp inner corners, and a round end mill, I needed to add dogbones to complete my project. I found <a href="https://medium.com/@arstein/prepping-your-model-for-milling-9e6271acfa3c">this article</a> really helpful for getting the geometry right.
+            </p>
+            <p> 
+                The only issue was that the article says to make your circle the exact same diameter as your bit. Bantam Tools shows an error and wants you to use a bigger end mill if you do this, so I had to go back to the drawing board. I found that 1.5 * diameter of the end mill worked best.
+            </p>
+            <img src="a5_bantam_too_big1.png" width="600"/>
+            <br />
+            <img src="a5_bantam_too_big2.png" width="400"/>
+
+            <h2>Attempt 2</h2>
+            <h3> Zero Tolerance </h3>
+            <p>
+                I started by making the slots and tabs all the same size. Each side measures 25mm, with each tab and slot 5mm wide. Their depth is that of the copper plate.
+            </p>
+            <img src="a5_two_sides_fusion.png" width="600"/>
+            <p> 
+                This proved to be a mistake. The pieces didn't actually fit together. But that's what iteration is for!
+            </p>
+            <img src="a5_bad_fit.jpg" width="600"/>
+
+            <h3> Smooth Milling </h3>
+            <img src="a5_milling.gif" width="400"/>
+            <p> 
+                I didn't have any issues with operating the mill this go around. The pieces came out as expected. 
+            </p>
+            <img src="a5_6_sides.jpg" width="600"/>
+
+            
+            <h3> <strike>Some</strike> All Assembly Required</h3>
+            <p> 
+                Unfortunately, though the pieces came out as expected, there was design flaw. I only designed 2 unique sides to my cube, but it actually needs 3 different combinations of slots and tabs to fit together. I put together my assembly in Fusion before milling, but only test with 2 sides ::smh::. Next time, I will assemble the WHOLE thing to make sure it all looks right. 
+            </p>
+            <img src="a5_assembly.gif" width="600"/>
+
+            <h2>Attempt 3</h2>
+
+            <h3> 3 Sides to a Cube </h3>
+            <p>
+                I added a 3rd side, which needed to be a combination of the other two shapes, so that it can fit in with both.
+            </p>
+            <img src="a5_3_sides_fusion.png" width="600"/>
+            <p>
+                Since I left one side the same, I only needed to print two of each of the other two sides.
+            </p>
+            <img src="a5_4_sides.png" width="600"/>
+
+            <h3> Ok, Some Tolerance</h3>
+            <p>
+                I measured roughly a .3mm tolerance needed for the slots, but went with .4 to be sure. I left one side the same but changed the slots on the other to 5.4mm and it's tabs to 4.6mm.
+            </p>
+            <img src="a5_calipers.jpg" width="600"/>
+            <p> And this time it fit! </p>
+            <img src="a5_good_fit.jpg" width="600"/>
+            
+
+            <h2>Final Product</h2>
+            <p> The three sides worked together well.</p>
+            <img src="a5_half_assembled.jpg" width="600">
+            <p> And now I have a cute little shiny trinket box thing!</p>
+            <img src="a5_final.jpg" width=600/>
+
+        </div>
+        
+    </body>
+</html>
