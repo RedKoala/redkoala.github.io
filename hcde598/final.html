@@ -1,0 +1,112 @@
+<!DOCTYPE html> 
+<html> 
+    <head> 
+        <meta charset="utf-8"> 
+        <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
+
+        <title>Colleen's HCDE 598 Digital Fabrication Page!</title> 
+
+        <link href="style.css" media="screen" rel="stylesheet" type="text/css" />
+
+    </head> 
+    <body> 
+
+        <div class="header">
+            <h1>The Monster Catcher!</h1>
+            <img src="final_monster_catcher.jpg" width=700>
+            <img src="final_it_4.jpg" width=700>
+            <p>
+                This nightlight doubles as a trap to catch monsters under the bed! Before you go to bed at night, place it under your bed and it will catch any monster under there. It even keeps a light on all night to make sure new monsters stay away!
+            </p>
+            <iframe width="774" height="473" src="https://www.youtube.com/embed/iJaVeIyJZwk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+            <h2> How it's made</h2>
+            <h3> Box </h3>
+            <h4> Material</h4>
+            <p> 
+                The enclosure of the Monster Catcher is made out of acrylc with a frosted etching adhesive on the outside. 
+            </p>
+            <img src="final_empty_acrylic_box.jpg" width=700/>
+            <p> 
+                I chose acrylic because it can be laser cut, making for faster iterations, and it is transparent, allowing the light to pass through. The etching diffuses the light and hides most of the wiring inside. It also adds and interesting texture to the outside. It came as one roll of stick-on etching.
+            </p>
+            <img src="final_etching_vs_not_acrylic.jpg" width=700>
+            <img src="final_etching_vs_no_diffused.jpg" width=700>
+            <p> 
+                All the pieces for the box were laser cut out of a single sheet of 12x24 inch acrylic. This includes gauges to determine the tolerance for the finger joints. I went with a .05mm gap to allow the box to fit very closely, but be able to come apart again while I am constructing it.
+            </p>
+            <img src="final_box_ai_screenshot.png" width=1000>
+
+            <h4> Joints</h4>
+            <p> 
+                The edges of the box are connected via finger joints.
+            </p>
+            <img src="final_finger_joints.jpg" width=700>
+            <p>
+                Because the joints weren't snug enough to hold themselves together, I used hot glue to attach them more permanently. This seems like a good application for heat-set inserts and L-brackets in the future.
+            </p>
+            <img src="final_hot_glue_box.jpg" width=700>
+
+            <h3> Teeth </h3>
+            <p>
+                The teeth are attached to hinges that transfer the rotary motion of the motor to linear motion. 
+            </p>
+            <img src="final_teeth_under_hood.gif" width=700>
+
+            <p>
+                The teeth and hinges were all a single print. The main structure is made of PLA but the supports were made of PVA which dissolves, ensuring the mechanism would move smoothly after the supports were removed.
+            </p>
+            <img src="final_teeth_with_supports.jpg" width=700>
+            <p>
+                The teeth slide in rails on the back of the face that keep them moving straight. The rails were 3D printed and attached with double sticky tape.
+            </p>
+            <img src="final_rails_on_face.jpg" width=700>
+            <p>
+                The mechanism of the teeth was by far the most difficult part of this project to get working right. I went through several iterations and test pieces before getting it to move smoothly. In the future, I might try something other than a slider-crank mechanism so that the teeth can open wider.
+            </p>
+
+            <h3>Servo Insert</h3>
+            <p>
+                Two servo motors drive the teeth motion. These are held in place with an insert in the box, shaped to hold the servos. 
+            </p>
+            <img src="final_open_monster_catcher.jpg" width=700>
+            <p> 
+                The insert is then attched to the box via L-brackets screwed into the sides of the box.
+            </p>
+            <img src="final_l_brackets.jpg" width=700>
+
+            <!-- <h3>Knob</h3> -->
+
+            <h2>Early Iterations</h2>
+            <p> 
+                I went through several prototypes of the monster catcher. I started with sketches and cardboard and then moved to small test prints to try out mechanisms and light diffusion. Then I tried a a full 3D printed and eventually, laser cut versions in cardboard and the final frosted acrylic.
+            </p>
+            <img src="final_sketch.jpg" width=350>
+            <img src="final_it_1.jpg" width=350>
+            <img src="final_tests.jpg" width=350>
+            <br/>
+            <img src="final_it_2.jpg" width=350>
+            <img src="final_it_3.jpg" width=350>
+            <img src="final_it_4.jpg" width=350>
+
+
+            <!-- <h2>Schematic</h2> -->
+            <!-- <h2>Firmware</h2> -->
+
+            <h2> File Downloads </h2>
+            <ul>
+                <li>
+                    <a href="final_box.dxf">Box and Servo Insert Outline DXF</a>
+                </li>
+                <li>
+                    <a href="final_teeth.stl">Teeth and Hinges STL</a> (meant for use with dissolvable supports)
+                </li>
+                <li>
+                    <a href="final_rails.stl">Rails STL</a>
+                </li>
+            </ul>
+
+        </div>
+        
+    </body>
+</html>
